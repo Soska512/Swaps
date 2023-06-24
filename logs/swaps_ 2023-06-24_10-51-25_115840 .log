@@ -1,0 +1,67 @@
+2023-06-24 10:51:27.187 | INFO     | __main__:main:188 - Started work with account: 0x6c4382F780cBB4c7a63f82F1379CfD6ac6E47909
+2023-06-24 10:51:44.167 | SUCCESS  | __main__:main:196 - Tx hash: https://gnosisscan.io/tx/0x223fea870eec6cacfb01ef20124486911f0a07366a6135edf01931e1eb0d1947
+2023-06-24 10:52:59.727 | SUCCESS  | __main__:main:206 - Tx hash: https://celoscan.io/tx/0x6411ea499aca172ff6c2689b6ce6d3671231a2fb94b3d180a8f3148db7e82695
+2023-06-24 10:52:59.729 | SUCCESS  | __main__:main:211 - Ended work with account: 0x6c4382F780cBB4c7a63f82F1379CfD6ac6E47909
+Sleeping for 20 sec
+2023-06-24 10:53:19.731 | INFO     | __main__:main:188 - Started work with account: 0xA675a467403A536fa7F1E336627C1D4888e82Be4
+2023-06-24 10:53:34.189 | ERROR    | __main__:main:199 - Error
+Traceback (most recent call last):
+
+  File "c:\Users\hjvrf\Desktop\Swaps\swaps.py", line 215, in <module>
+    main()
+    └ <function main at 0x0000026F9D57AF20>
+
+> File "c:\Users\hjvrf\Desktop\Swaps\swaps.py", line 195, in main
+    txn = swap_agEur_gnosis_to_celo(account)
+          │                         └ <eth_account.signers.local.LocalAccount object at 0x0000026F9D7894D0>
+          └ <function swap_agEur_gnosis_to_celo at 0x0000026F9D57AD40>
+
+  File "c:\Users\hjvrf\Desktop\Swaps\swaps.py", line 87, in swap_agEur_gnosis_to_celo
+    ).build_transaction({
+
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\contract\contract.py", line 510, in build_transaction
+    return build_transaction_for_function(
+           └ <function build_transaction_for_function at 0x0000026F9D430540>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\contract\utils.py", line 232, in build_transaction_for_function
+    prepared_transaction = fill_transaction_defaults(w3, prepared_transaction)
+                           │                         │   └ {'from': '0xA675a467403A536fa7F1E336627C1D4888e82Be4', 'value': 34448165093333147, 'nonce': 5, 'to': '0xFA5Ed56A203466CbBC243...
+                           │                         └ <web3.main.Web3 object at 0x0000026F9D57F090>
+                           └ <function fill_transaction_defaults at 0x0000026F9D3DED40>
+  File "cytoolz\functoolz.pyx", line 249, in cytoolz.functoolz.curry.__call__
+    return self.func(*args, **kwargs)
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\_utils\transactions.py", line 132, in fill_transaction_defaults
+    default_val = default_getter(w3, transaction)
+                  │              │   └ {'from': '0xA675a467403A536fa7F1E336627C1D4888e82Be4', 'value': 34448165093333147, 'nonce': 5, 'to': '0xFA5Ed56A203466CbBC243...
+                  │              └ <web3.main.Web3 object at 0x0000026F9D57F090>
+                  └ <function <lambda> at 0x0000026F9D3DE5C0>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\_utils\transactions.py", line 72, in <lambda>
+    "gas": lambda w3, tx: w3.eth.estimate_gas(tx),
+                  │   │   │  │   │            └ {'from': '0xA675a467403A536fa7F1E336627C1D4888e82Be4', 'value': 34448165093333147, 'nonce': 5, 'to': '0xFA5Ed56A203466CbBC243...
+                  │   │   │  │   └ <function Eth.estimate_gas at 0x0000026F9D446520>
+                  │   │   │  └ <web3.eth.eth.Eth object at 0x0000026F9D590AD0>
+                  │   │   └ <web3.main.Web3 object at 0x0000026F9D57F090>
+                  │   └ {'from': '0xA675a467403A536fa7F1E336627C1D4888e82Be4', 'value': 34448165093333147, 'nonce': 5, 'to': '0xFA5Ed56A203466CbBC243...
+                  └ <web3.main.Web3 object at 0x0000026F9D57F090>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\eth\eth.py", line 292, in estimate_gas
+    return self._estimate_gas(transaction, block_identifier)
+           │    │             │            └ None
+           │    │             └ {'from': '0xA675a467403A536fa7F1E336627C1D4888e82Be4', 'value': 34448165093333147, 'nonce': 5, 'to': '0xFA5Ed56A203466CbBC243...
+           │    └ <web3.method.Method object at 0x0000026F9D4575D0>
+           └ <web3.eth.eth.Eth object at 0x0000026F9D590AD0>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\module.py", line 68, in caller
+    result = w3.manager.request_blocking(
+             │  │       └ <function RequestManager.request_blocking at 0x0000026F9D551260>
+             │  └ <web3.manager.RequestManager object at 0x0000026F9D57F150>
+             └ <web3.main.Web3 object at 0x0000026F9D57F090>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\manager.py", line 232, in request_blocking
+    return self.formatted_response(
+           │    └ <staticmethod(<function RequestManager.formatted_response at 0x0000026F9D5511C0>)>
+           └ <web3.manager.RequestManager object at 0x0000026F9D57F150>
+  File "C:\Users\hjvrf\AppData\Local\Programs\Python\Python311\Lib\site-packages\web3\manager.py", line 205, in formatted_response
+    raise ValueError(response["error"])
+                     └ {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'insufficient funds for transfer: address 0xa675a467403a536fa7f1e3366...
+
+ValueError: {'code': -32000, 'message': 'insufficient funds for transfer: address 0xa675a467403a536fa7f1e336627c1d4888e82be4'}
+2023-06-24 10:53:49.606 | SUCCESS  | __main__:main:206 - Tx hash: https://celoscan.io/tx/0x0b8ad670125fa6032854c50d44dacb5817ba05e2c75223036de88c40f1b08c54
+2023-06-24 10:53:49.608 | SUCCESS  | __main__:main:211 - Ended work with account: 0xA675a467403A536fa7F1E336627C1D4888e82Be4
+Sleeping for 20 sec
