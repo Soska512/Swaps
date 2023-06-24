@@ -4,12 +4,14 @@
 
 УСТАНОВКА И ЗАПУСК:
     Переносите все файлы в папку
+    
     1. win+R -> cmd
     2. cd *директорияСкрипта* (Пример: cd C:\Users\user\SWAPS)
     3. pip install -r requirements.txt
     4. python swaps.py
 
 ПЕРЕД ЗАПУСКОМ:
+    
     1. CELO покупаете на бирже, а xDAI в гносис можно пополнить через Bungee: https://bungee.exchange/refuel
 
     2. Покупаете agEUR на панкейке, например, в BSC https://pancakeswap.finance/swap?outputCurrency=0x12f31B73D812C6Bb0d735a218c086d44D5fe5f89 , любое количество, хоть 0.01
