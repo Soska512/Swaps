@@ -3,6 +3,7 @@ from web3 import Web3, Account
 import time, json
 from web3.auto import w3
 from sys import stderr
+import random
 
 logger.remove()
 
@@ -102,7 +103,7 @@ def swap_agEur_gnosis_to_celo(account):
         signed_swap_txn = gnosis_w3.eth.account.sign_transaction(swap_txn, account.key)
         swap_txn_hash = gnosis_w3.eth.send_raw_transaction(signed_swap_txn.rawTransaction)
         return swap_txn_hash
-    else:
+    elif amount == 0:
         swap_txn = angle_bridge_gnosis_contract.functions.withdraw(get_balance_LZ_gnosis(address),
                                                     address,
         ).build_transaction({
@@ -115,6 +116,35 @@ def swap_agEur_gnosis_to_celo(account):
 
         gasLimit = gnosis_w3.eth.estimate_gas(swap_txn)
         swap_txn.update({'gas': gasLimit})        
+        signed_swap_txn = gnosis_w3.eth.account.sign_transaction(swap_txn, account.key)
+        swap_txn_hash = gnosis_w3.eth.send_raw_transaction(signed_swap_txn.rawTransaction)
+        time.sleep(30)
+
+        fees = angle_bridge_gnosis_contract.functions.estimateSendFee(125,
+                                                           address,
+                                                           amount,
+                                                           True,
+                                                           '0x00010000000000000000000000000000000000000000000000000000000000030d40'
+                                                                         ).call()
+        fee = fees[0]
+
+        swap_txn = angle_bridge_gnosis_contract.functions.send(125,
+                                                    address,
+                                                    amount,
+                                                    address,
+                                                    '0x0000000000000000000000000000000000000000',
+                                                    '0x00010000000000000000000000000000000000000000000000000000000000030d40'                              
+        ).build_transaction({
+        'from': address,
+        'value': fee,
+        'nonce': nonce,
+        })
+        swap_txn.update({'maxFeePerGas': gnosis_w3.eth.fee_history(gnosis_w3.eth.get_block_number(), 'latest')['baseFeePerGas'][-1] + gnosis_w3.eth.max_priority_fee})
+        swap_txn.update({'maxPriorityFeePerGas': gnosis_w3.eth.max_priority_fee})
+
+        gasLimit = gnosis_w3.eth.estimate_gas(swap_txn)
+        swap_txn.update({'gas': gasLimit})
+
         signed_swap_txn = gnosis_w3.eth.account.sign_transaction(swap_txn, account.key)
         swap_txn_hash = gnosis_w3.eth.send_raw_transaction(signed_swap_txn.rawTransaction)
         return swap_txn_hash
@@ -179,6 +209,31 @@ def swap_agEur_celo_to_gnosis(account):
         })
         signed_swap_txn = celo_w3.eth.account.sign_transaction(swap_txn, account.key)
         swap_txn_hash = celo_w3.eth.send_raw_transaction(signed_swap_txn.rawTransaction)
+        time.sleep(30)
+
+        fees = angle_bridge_celo_contract.functions.estimateSendFee(145,
+                                                           address,
+                                                           amount,
+                                                           True,
+                                                           '0x00010000000000000000000000000000000000000000000000000000000000030d40'
+                                                                         ).call()
+        fee = fees[0]
+
+        swap_txn = angle_bridge_celo_contract.functions.send(145,
+                                                    address,
+                                                    amount,
+                                                    address,
+                                                    '0x0000000000000000000000000000000000000000',
+                                                    '0x00010000000000000000000000000000000000000000000000000000000000030d40'                              
+        ).build_transaction({
+        'from': address,
+        'value': fee,
+        'gas': 300000,
+        'gasPrice': gas_price,
+        'nonce': nonce,
+        })
+        signed_swap_txn = celo_w3.eth.account.sign_transaction(swap_txn, account.key)
+        swap_txn_hash = celo_w3.eth.send_raw_transaction(signed_swap_txn.rawTransaction)
         return swap_txn_hash
 
 
@@ -196,17 +251,17 @@ def main():
             try:
                 get_balance_agEur_gnosis(account.address)
                 approve_agEur_gnosis(account)
-                time.sleep(10)
+                time.sleep(random.randint(10, 20))
                 txn = swap_agEur_gnosis_to_celo(account)
                 logger.success(f"Tx hash: https://gnosisscan.io/tx/{txn.hex()}")
-                time.sleep(60)
+                time.sleep(random.randint(60, 80))
             except:
                 logger.exception("Error")
             print("Celo -> Gnosis")
             try:
                 get_balance_agEur_celo(account.address)
                 approve_agEur_celo(account)
-                time.sleep(10)
+                time.sleep(random.randint(10, 20))
                 txn = swap_agEur_celo_to_gnosis(account)
                 logger.success(f"Tx hash: https://celoscan.io/tx/{txn.hex()}")
             except:
@@ -215,6 +270,6 @@ def main():
             continue
         logger.success(f"Ended work with account: {account.address}\n"
                        "Sleeping for 20 sec")
-        time.sleep(20)
+        time.sleep(random.randint(10, 20))
 
 main()
