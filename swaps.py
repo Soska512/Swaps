@@ -190,7 +190,7 @@ def swap_agEur_celo_to_gnosis(account):
         ).build_transaction({
         'from': address,
         'value': fee,
-        'gas': 300000,
+        'gas': 600000,
         'gasPrice': gas_price,
         'nonce': nonce,
         })
@@ -203,7 +203,7 @@ def swap_agEur_celo_to_gnosis(account):
         ).build_transaction({
         'from': address,
         'value': 0,
-        'gas': 400000,
+        'gas': 600000,
         'gasPrice': gas_price,
         'nonce': nonce,
         })
@@ -228,7 +228,7 @@ def swap_agEur_celo_to_gnosis(account):
         ).build_transaction({
         'from': address,
         'value': fee,
-        'gas': 300000,
+        'gas': 600000,
         'gasPrice': gas_price,
         'nonce': nonce,
         })
